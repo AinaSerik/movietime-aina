@@ -1,5 +1,3 @@
-import Search from './Search/Search';
-
 export { default as Actors } from './Actors/Actors';
 export { default as MovieInformation } from './MovieInformation/MovieInformation';
 export { default as Movies } from './Movies/Movies';
