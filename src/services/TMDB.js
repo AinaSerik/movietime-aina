@@ -4,7 +4,7 @@ const tmdbApiKey = process.env.REACT_APP_TMDB_KEY;
 
 export const tmdbApi = createApi({
   reducerPath: 'tmdbApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://api.themoviedb.org/3' }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://api.themoviedb.org/3" }),
   endpoints: (builder) => ({
     //* Get Genres
     getGenres: builder.query({
@@ -21,8 +21,6 @@ export const tmdbApi = createApi({
         if(genreIdOrCategoryName && typeof genreIdOrCategoryName === 'string') { 
           return `movie/${genreIdOrCategoryName}?page=${page}&api_key=${tmdbApiKey}`;
         }
-
-        console.log(genreIdOrCategoryName);
 
         // Get Movies by Genre
         if (genreIdOrCategoryName && typeof genreIdOrCategoryName === 'number') {
