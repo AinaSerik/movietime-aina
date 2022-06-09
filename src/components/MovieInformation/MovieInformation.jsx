@@ -193,4 +193,4 @@ const MovieInformation = () => {
   );
 };
 
-export default MovieInformation;
+export default MovieInformation; 
