@@ -45,7 +45,6 @@ const MovieInformation = () => {
       media_id: id,
       favorite: !isMovieFavorited,
     });
-
     setIsMovieFavorited((prevFavorite) => !prevFavorite);
   };
 
@@ -55,7 +54,6 @@ const MovieInformation = () => {
       media_id: id,
       watchlist: !isMovieWatchlisted,
     });
-
     setIsMovieWatchlisted((prev) => !prev);
   };
 
