@@ -1,5 +1,4 @@
-import {CenterFocusStrong} from '@mui/icons-material';
-import { makeStyles } from '@mui/styles';
+import {makeStyles} from '@mui/styles';
 
 export default makeStyles((theme) => ({
   movie: {
@@ -13,16 +12,16 @@ export default makeStyles((theme) => ({
       display: 'flex',
       flexDirection: 'column',
     },
-    '&: hover' : {
+    '&:hover': {
       cursor: 'pointer',
     },
   },
   image: {
-    borderReadius: '20px',
+    borderRadius: '20px',
     height: '300px',
     marginBottom: '10px',
     '&:hover': {
-      transform: 'scale(1.05)'
+      transform: 'scale(1.05)',
     },
   },
   title: {
