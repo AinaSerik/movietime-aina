@@ -12,15 +12,14 @@ import useStyles from './styles';
 
 const NavBar = () => {
   const { isAuthenticated, user } = useSelector(userSelector)
-  const [mobileOpen, setMobileOpen] = useState(false);
   const classes = useStyles();
   const isMobile = useMediaQuery('(max-width: 600px)');
   const theme = useTheme();
-  const dispatch = useDispatch();
+  const [mobileOpen, setMobileOpen] = useState(false);
   const token = localStorage.getItem('request_token');
   const sessionIdFromLocalStorage = localStorage.getItem('session_id');
+  const dispatch = useDispatch();
   
-
   useEffect(() => {
     const logInUser = async () => {
       if(token) {
@@ -41,6 +40,8 @@ const NavBar = () => {
     logInUser();
 
   }, [token]);
+
+  const userImg = user?.avatar?.tmdb?.avatar_path;
 
   return (
     <>
@@ -78,7 +79,7 @@ const NavBar = () => {
            <Avatar 
              style={{ width: 30, height: 30 }}
              alt='Profile'
-             src={`https://www.themoviedb.org/t/p/w64_and_h64_face${user?.avatar?.tmdb?.avatar_path}`}
+             src={`https://www.themoviedb.org/t/p/w32_and_h64_face${user?.avatar?.tmdb?.avatar_path}`}
            />
            </Button>
          )}
