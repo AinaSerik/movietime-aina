@@ -76,11 +76,12 @@ const NavBar = () => {
            onClick={() => {}}
            >
            {!isMobile && <>My Movies &nbsp;</>}
-           <Avatar 
+           <img
              style={{ width: 30, height: 30 }}
-             alt='Profile'
-             src={`https://www.themoviedb.org/t/p/w32_and_h64_face${user?.avatar?.tmdb?.avatar_path}`}
-           />
+             alt={user.username}
+            src={`https://www.themoviedb.org/t/p/w32_and_h32_face/${userImg}`}
+            />
+
            </Button>
          )}
        </div>
