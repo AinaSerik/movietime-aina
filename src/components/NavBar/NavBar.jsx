@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { AppBar, IconButton, Toolbar, Drawer, Button, useMediaQuery } from '@mui/material';
+import { AppBar, IconButton, Toolbar, Drawer, Button, Avatar, useMediaQuery } from '@mui/material';
 import { Menu, AccountCircle, Brightness4, Brightness7 } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
@@ -79,12 +79,11 @@ const NavBar = () => {
            onClick={() => {}}
            >
            {!isMobile && <>My Movies &nbsp;</>}
-           <img
+           <Avatar
              style={{ width: 30, height: 30 }}
              alt={user.username}
-            src={`https://www.themoviedb.org/t/p/w32_and_h32_face/${userImg}`}
+            src={`https://www.themoviedb.org/t/p/w64_and_h64_face/${user?.avatar?.tmdb?.avatar_path}`}
             />
-
            </Button>
          )}
        </div>

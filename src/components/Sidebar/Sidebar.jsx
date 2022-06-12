@@ -19,12 +19,16 @@ const redLogo = 'https://fontmeme.com/permalink/220604/bf5199df348d9fb19fbddf180
 const blueLogo = 'https://fontmeme.com/permalink/220604/bf5199df348d9fb19fbddf18098a4825.png';
 
 const Sidebar = ({ setMobileOpen }) => {
-  const { getgenreIdOrCategoryName } = useSelector((state) => state.currentGenreOrCategory);
+  const { genreIdOrCategoryName } = useSelector((state) => state.currentGenreOrCategory);
   const theme = useTheme();
   const classes = useStyles();
   const { data, isFetching } = useGetGenresQuery();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [genreIdOrCategoryName]);
+  
   return (
     <>
       <Link to='/' className={classes.imageLink}>
