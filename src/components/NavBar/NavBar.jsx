@@ -1,27 +1,28 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { AppBar, IconButton, Toolbar, Drawer, Button, Avatar, useMediaQuery } from '@mui/material';
-import { Menu, AccountCircle, Brightness4, Brightness7 } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
-import { useTheme } from '@mui/material/styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { ColorModeContext } from '../../utils/ToggleColorMode';
+import React, {useState, useEffect, useContext} from 'react';
+import {AppBar, IconButton, Toolbar, Drawer, Button, Avatar, useMediaQuery} from '@mui/material';
+import {Menu, AccountCircle, Brightness4, Brightness7} from '@mui/icons-material';
+import {Link} from 'react-router-dom';
+import {useTheme} from '@mui/material/styles';
+import {useDispatch, useSelector} from 'react-redux';
 
-import { setUser, userSelector } from '../../features/auth';
-import { Sidebar, Search } from '..';
-import { fetchToken, createSessionId, moviesApi } from '../../utils';
+import {ColorModeContext} from '../../utils/ToggleColorMode';
+import {setUser, userSelector} from '../../features/auth';
+import {Sidebar, Search} from '..';
+import {fetchToken, createSessionId, moviesApi} from '../../utils';
 import useStyles from './styles';
 
 const NavBar = () => {
-  const { isAuthenticated, user } = useSelector(userSelector)
-  const classes = useStyles();
-  const isMobile = useMediaQuery('(max-width: 600px)');
-  const theme = useTheme();
+  const {isAuthenticated, user} = useSelector(userSelector);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const token = localStorage.getItem('request_token');
-  const sessionIdFromLocalStorage = localStorage.getItem('session_id');
+  const classes = useStyles();
+  const isMobile = useMediaQuery('(max-width:600px)');
+  const theme = useTheme();
   const dispatch = useDispatch();
 
-  const colorMode = useContext(ColorModeContext)
+  const colorMode = useContext(ColorModeContext);
+
+  const token = localStorage.getItem('request_token');
+  const sessionIdFromLocalStorage = localStorage.getItem('session_id');
   
   useEffect(() => {
     const logInUser = async () => {
@@ -44,8 +45,6 @@ const NavBar = () => {
 
   }, [token]);
 
-  const userImg = user?.avatar?.tmdb?.avatar_path;
-
   return (
     <>
       <AppBar position='fixed'>
@@ -54,7 +53,7 @@ const NavBar = () => {
          <IconButton
            color='inherit'
            edge='start'
-           style={{ ouline: 'none' }}
+           style={{ outline: 'none' }}
            onClick={() => setMobileOpen((prevMobileOpen) => !prevMobileOpen)}
            className={classes.menuButton}
            >

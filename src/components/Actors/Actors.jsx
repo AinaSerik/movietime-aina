@@ -1,20 +1,22 @@
-import React, {useState} from 'react';
-import {Box, Button, CircularProgress, Grid, Typography} from '@mui/material';
-import {useHistory, useParams} from 'react-router-dom';
-import {ArrowBack} from '@mui/icons-material';
+import React, { useState } from 'react';
+import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material';
+import { useHistory, useParams }  from 'react-router-dom';
+import { ArrowBack } from '@mui/icons-material';
 
 import useStyles from './styles';
-import {useGetActorsDetailsQuery, useGetMoviesByActorIdQuery} from '../../services/TMDB';
-import {MovieList, Pagination } from '..';
+import { useGetActorsDetailsQuery, useGetMoviesByActorIdQuery } from '../../services/TMDB';
+import { MovieList, Pagination } from '..';
 
 const Actors = () => {
-  const {id} = useParams();
+  const { id } = useParams();
   const history = useHistory();
   const classes = useStyles();
   const [page, setPage] = useState(1);
 
-  const {data, isFetching, error} = useGetActorsDetailsQuery(id);
-  const {data: movies} = useGetMoviesByActorIdQuery({id, page});
+  const { data, isFetching, error } = useGetActorsDetailsQuery(id);
+  const { data: movies } = useGetMoviesByActorIdQuery({ id, page });
+
+  console.log(movies);
 
   if (isFetching)
   {
@@ -42,8 +44,8 @@ const Actors = () => {
         <Grid item lg={5} xl={4}>
           <img
             className={classes.image}
-            src={`https://image.tmdb.org/t/p/w780/${data?.profile_path}`}
-            alt={data.name}
+            src={`https://image.tmdb.org/t/p/w500/${data?.profile_path}`}
+            alt={data?.name}
           />
         </Grid>
         <Grid item lg={7} xl={8} style={{display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>

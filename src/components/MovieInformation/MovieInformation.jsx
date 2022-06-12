@@ -14,20 +14,24 @@ import { userSelector } from '../../features/auth';
 
 const MovieInformation = () => {
   const { user } = useSelector(userSelector);
-  const [isMovieFavorited, setIsMovieFavorited] = useState(false);
-  const [isMovieWatchlisted, setIsMovieWatchlisted] = useState(false);
-  const [open, setOpen] = useState(false);
   const { id } = useParams();
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { data, isFetching, error } = useGetMovieQuery(id);
+  const [open, setOpen] = useState(false);
 
-  const { data: favoriteMovies } = useGetListQuery({listName: 'favorite/movies', accountId: user.id, sessionId: localStorage.getItem('session_id'), page: 1,
+  const { data, isFetching, error } = useGetMovieQuery(id);
+  const { data: favoriteMovies } = useGetListQuery({
+  listName: 'favorite/movies', accountId: user.id, sessionId: localStorage.getItem('session_id'), page: 1,
+  });
+   const { data: watchlistMovies } = useGetListQuery({listName: 'watchlist/movies', accountId: user.id, sessionId: localStorage.getItem('session_id'), page: 1,
 });
-  const { data: watchlistMovies } = useGetListQuery({listName: 'watchlist/movies', accountId: user.id, sessionId: localStorage.getItem('session_id'), page: 1,
-});
-  const { data: recommendations, isFetching: isLoading } = useGetRecommendationsQuery({list: '/recommendations', movie_id: id,
-});
+  const { data: recommendations, isFetching: isRecommendationsFetching } = useGetRecommendationsQuery({
+    list: '/recommendations', movie_id: id,
+  });
+
+  const [ isMovieFavorited, setIsMovieFavorited] = useState(false);
+  const [ isMovieWatchlisted, setIsMovieWatchlisted] = useState(false);
+
 
   useEffect(() => {
     setIsMovieFavorited(!!favoriteMovies?.results?.find((movie) => movie?.id === data?.id),
@@ -40,16 +44,18 @@ const MovieInformation = () => {
   }, [watchlistMovies, data]);
 
   const addToFavorites = async () => {
-    await axios.post(`https://api.tmdb.org/3/account/${user.id}/favorite?api_key=${process.env.REACT_APP_TMDB_KEY}&session_id=${localStorage.getItem('session_id')}`, {
+    await axios.post(`https://api.themoviedb.org/3/account/${user.id}/favorite?api_key=${process.env.REACT_APP_TMDB_KEY}&session_id=${localStorage.getItem('session_id')}`, {
       media_type: 'movie',
       media_id: id,
       favorite: !isMovieFavorited,
     });
-    setIsMovieFavorited((prevFavorite) => !prevFavorite);
+    setIsMovieFavorited((prev) => !prev);
   };
 
+  console.log({isMovieWatchlisted});
+
   const addToWatchlist = async () => {
-    await axios.post(`https://api.tmdb.org/3/account/${user.id}/watchlist?api_key=${process.env.REACT_APP_TMDB_KEY}&session_id=${localStorage.getItem('session_id')}`, {
+    await axios.post(`https://api.themoviedb.org/3/account/${user.id}/watchlist?api_key=${process.env.REACT_APP_TMDB_KEY}&session_id=${localStorage.getItem('session_id')}`, {
       media_type: 'movie',
       media_id: id,
       watchlist: !isMovieWatchlisted,
@@ -86,7 +92,7 @@ const MovieInformation = () => {
       </Grid>
       <Grid item container direction="column" lg={7}>
         <Typography variant="h3" align="center" gutterBottom>
-          {data?.title} ({data?.release_date.split('-')[0]})
+          {data?.title} ({data.release_date.split('-')[0]})
         </Typography>
         <Typography variant="h5" align="center" gutterBottom>
           {data?.tagline}
@@ -129,8 +135,15 @@ const MovieInformation = () => {
         <Grid item container spacing={2}>
           {data && data.credits?.cast?.map((character, i) => (
             character.profile_path && (
-              <Grid key={i} item xs={4} md={2} component={Link} to={`/actors/${character.id}`} style={{ textDecoration: 'none' }}>
-                <img className={classes.castImage} src={`https://image.tmdb.org/t/p/w500/${character.profile_path}`} alt={character.name} />
+              <Grid key={i} item xs={4} md={2} component={Link} 
+              to={`/actors/${character.id}`} 
+              style={{ textDecoration: 'none' }}
+              >
+                <img 
+                className={classes.castImage} 
+                src={`https://image.tmdb.org/t/p/w500/${character.profile_path}`} 
+                alt={character.name} 
+                />
                 <Typography color="textPrimary">{character?.name}</Typography>
                 <Typography color="textSecondary">
                   {character.character.split('/')[0]}
